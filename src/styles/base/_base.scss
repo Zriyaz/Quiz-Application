@@ -5,3 +5,14 @@
 body{
   font-family: $quicksand;
 }
+
+.toast-invalid{
+  background: $error-text !important;
+  border-radius: 5px important;
+  color: white important;
+}
+.toast-valid{
+  background: $success !important;
+  border-radius: 5px important;
+  color:white important;
+}
