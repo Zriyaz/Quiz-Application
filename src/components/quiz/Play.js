@@ -27,12 +27,16 @@ class Play extends React.Component{
       hints:5,
       fiftyFifty:2,
       usedFiftyFifty:false,
+      priviousRandomNumbers:[],
       time:{}
     }
+    this.interval=null
+
   }
   componentDidMount(){
     const {questions,currentQuestion,nextQuestion,previousQuestion}=this.state
     this.displayQuestions(questions,currentQuestion,nextQuestion,previousQuestion)
+    this.startTimer()
   }
 
   displayQuestions=(questions=this.state.questions,currentQuestion,nextQuestion,previousQuestion)=>{
@@ -48,7 +52,10 @@ class Play extends React.Component{
         nextQuestion,
         previousQuestion,
         numberOfQuestions:questions.length,
-        answer
+        answer,
+        priviousRandomNumbers:[]
+      },()=>{
+        this.showOptions()
       })
     }
   }
@@ -65,7 +72,49 @@ class Play extends React.Component{
      this.wrongAnswer()
    }
   }
-  handleButtonClick=()=>{
+
+  handleNextButtonClick=()=>{
+    this.playButtonSound()
+    if(this.state.nextQuestion!==undefined){
+      this.setState(prevState=>({
+        currentQuestionIndex:prevState.currentQuestionIndex+1
+      }),()=>{
+        this.displayQuestions(this.state.state,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+      })
+    }
+  }
+  handlePreviousButtonClick=()=>{
+    this.playButtonSound()
+    if(this.state.previousQuestion!==undefined){
+      this.setState(prevState=>({
+        currentQuestionIndex:prevState.currentQuestionIndex-1
+      }),()=>{
+        this.displayQuestions(this.state.state,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+      })
+    }
+  }
+  handleQuitButtonClick=()=>{
+    this.playButtonSound()
+    if(window.confirm('Are you sure want to quit?')){
+      this.props.history.push('/')
+    }
+  }
+
+  handleButtonClick=(e)=>{
+    switch(e.target.id){
+      case 'next-button':
+      this.handleNextButtonClick()
+      break;
+      case 'previous-button':
+      this.handlePreviousButtonClick()
+      break
+      case 'quit-button':
+      this.handleQuitButtonClick()
+      break
+      default:
+       break;
+    }
+
      this.playButtonSound()
   }
 
@@ -107,9 +156,120 @@ wrongAnswer = ()=>{
     })
 }
   
+showOptions=()=>{
+  const option = Array.from(document.querySelectorAll('.option'))
+  option.forEach(option=>{
+    option.style.visibility = 'visible'
+  })
+  this.setState({usedFiftyFifty:false})
+}  
+handleHints = ()=>{
+  if(this.state.hints > 0){
+  const options= Array.from(document.querySelectorAll('.option'))
+  let indexOfAnswer
+  options.forEach((option,index)=>{
+    if(option.innerHTML.toLowerCase()=== this.state.answer.toLowerCase()){
+      indexOfAnswer=index
+    }
+  })
+  while(true){
+    const randomNumber =Math.round(Math.random() * 3)
+    if(randomNumber!==indexOfAnswer &&  !this.state.priviousRandomNumbers.includes(randomNumber)){
+      options.forEach((option,index)=>{
+        if(index===randomNumber){
+          option.style.visibility='hidden'
+          this.setState((prevState)=>({
+          hints:prevState.hints-1,
+          priviousRandomNumbers : prevState.priviousRandomNumbers.concat(randomNumber)  
+        }))
+        }        
+      })
+      break
+    }
+    if(this.state.priviousRandomNumbers.length>=3) break
+  }
+ }
+}
 
+handleFiftyFifty=()=>{
+  if(this.state.fiftyFifty>0 && this.state.usedFiftyFifty===false){
+    const options=document.querySelectorAll('.option')
+    const randomNumbers=[]
+    let indexOfAnswer
+
+    options.forEach((option,index)=>{
+      if(option.innerHTML.toLowerCase()===this.state.answer.toLowerCase()){
+        indexOfAnswer=index
+      }
+    })
+    let count=0
+    do{
+      const randomNumber=Math.round(Math.random() * 3)
+      if(randomNumber!==indexOfAnswer){
+        if(randomNumbers.length<2 && !randomNumbers.includes(randomNumber)&&!randomNumbers.includes(indexOfAnswer)){
+          randomNumbers.push(randomNumber);
+          count++
+        }else{
+          while(true){
+            const newRandomNumber=Math.round(Math.random() * 3)
+            if(!randomNumbers.includes(newRandomNumber)&& !randomNumbers.includes(indexOfAnswer)){
+              randomNumbers.push(newRandomNumber)
+              count++
+              break
+            }
+          }
+        }
+      }
+
+    }while(count<2)
+    options.forEach((option,index)=>{
+      if(randomNumbers.includes(index)){
+        option.style.visibility='hidden'
+      }
+    })
+    this.setState(prevState=>({
+      fiftyFifty:prevState.fiftyFifty-1,
+      usedFiftyFifty:true
+    }))
+  }
+}
+
+startTimer=()=>{
+  const countDownTime=Date.now() + 180000
+  this.interval=setInterval(()=>{
+      const now =new Date()
+      const distance=countDownTime- now
+      const minutes= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds= Math.floor((distance % (1000 * 60)) / 1000)
+      if(distance<0){
+        clearInterval(this.interval)
+        this.setState({
+          time: {
+            minutes:0,
+            seconds:0
+          }
+        },()=>{
+          alert('Quiz has ended!')
+          this.props.history.push('/')
+        })
+      } else{
+        this.setState({
+          time:{
+            minutes,
+            seconds
+          }
+        })
+      }
+  },1000) 
+}
   render(){  
-    const {currentQuestion,currentQuestionIndex,numberOfQuestions}=this.state
+    const {
+     currentQuestion,
+     currentQuestionIndex,
+     hints,fiftyFifty,
+     numberOfQuestions,
+     time
+     }=this.state
     return(
       <>
       <Helmet><title>Quiz</title></Helmet>
@@ -119,19 +279,25 @@ wrongAnswer = ()=>{
        <audio id="button-sound" controls src={buttonSound}></audio>
        </>
       <div className="questions" >
+       <h2>Quiz Mode</h2>
       <div className="lifeline-container">
         <p>
-         <span className="mdi mdi-set-center mdi-24px lifeline-icon"></span><span className="lifeline">2</span>
+         <span onClick={this.handleFiftyFifty} className="mdi mdi-set-center mdi-24px lifeline-icon">
+          <span className="lifeline">{fiftyFifty}</span>
+         </span>
+        
         </p>
         <p>
-         <span className="mdi mdi-lightbulb-outline mdi-24px lifeline-icon"></span>
-         <span className="lifeline">5</span>
+         <span onClick={this.handleHints} className="mdi mdi-lightbulb-outline mdi-24px lifeline-icon">
+           <span  className="lifeline">{hints}</span>
+         </span>
+        
         </p>
       </div>
       <div>
        <p>
          <span className="left" style={{float:'left'}}>{currentQuestionIndex+1} of {numberOfQuestions}</span>         
-         <span className="right">2:15<span className="mdi mdi-clock-outline mdi-24px "></span></span>
+         <span className="right">{time.minutes}:{time.seconds}<span className="mdi mdi-clock-outline mdi-24px "></span></span>
        </p>
       </div>
         <h5>{currentQuestion.question} </h5>
@@ -144,9 +310,9 @@ wrongAnswer = ()=>{
           <p onClick ={this.handleOptionClick} className="option">{currentQuestion.optionD}</p>
         </div>
         <div className="button-container">
-         <button  onClick={this.handleButtonClick}>previous</button>
-         <button onClick={this.handleButtonClick} >next</button>
-         <button onClick={this.handleButtonClick} >quit</button>
+         <button id="previous-button"  onClick={this.handleButtonClick}>previous</button>
+         <button id="next-button" onClick={this.handleButtonClick} >next</button>
+         <button id="quit-button" onClick={this.handleButtonClick} >quit</button>
         </div>
       </div>
       </>
