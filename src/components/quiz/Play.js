@@ -1,6 +1,8 @@
 import React from "react"
 import Helmet from "react-helmet"
 import M from 'materialize-css'
+import classnames from 'classnames';
+
 
 import questions from "../../questions.json"
 import isEmpty from "../../utils/isEmpty"
@@ -33,12 +35,19 @@ class Play extends React.Component{
       time:{}
     }
     this.interval=null
+    this.correctSound =React.createRef()
+    this.wrongSound = React.createRef()
+    this.buttonSound=React.createRef()
+
 
   }
   componentDidMount(){
     const {questions,currentQuestion,nextQuestion,previousQuestion}=this.state
     this.displayQuestions(questions,currentQuestion,nextQuestion,previousQuestion)
     this.startTimer()
+  }
+  componentDidMount(){
+    clearInterval(this.interval)
   }
 
   displayQuestions=(questions=this.state.questions,currentQuestion,nextQuestion,previousQuestion)=>{
@@ -65,12 +74,12 @@ class Play extends React.Component{
   handleOptionClick=(e)=>{
   if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()){
     setTimeout(()=>{
-      document.getElementById('correct-sound').play()
+      this.correctSound.current.play()
     },500)
      this.correctAnswer()
    }else{
      setTimeout(()=>{
-       document.getElementById('wrong-sound').play()
+       this.wrongSound.current.play()
      },500)
      this.wrongAnswer()
    }
@@ -117,17 +126,11 @@ class Play extends React.Component{
       default:
        break;
     }
-
      this.playButtonSound()
   }
-
   playButtonSound=()=>{
-    document.getElementById("button-sound").play()
+    this.buttonSound.current.play()
   }
-
-
-
-
   correctAnswer = ()=>{
     M.toast({
        html:'Correct Answer',
@@ -140,7 +143,11 @@ class Play extends React.Component{
       currentQuestionIndex:prevState.currentQuestionIndex +1,
       numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions+1
     }),()=>{
-      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+       if(this.state.nextQuestion===undefined){
+      this.endQuiz()
+      }else{
+       this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+      }
     })
 }
 wrongAnswer = ()=>{
@@ -155,7 +162,11 @@ wrongAnswer = ()=>{
       currentQuestionIndex:prevState.currentQuestionIndex+1,
       numberOfAnsweredQuestions:prevState.numberOfAnsweredQuestions +1
     }),()=>{
-      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+      if(this.state.nextQuestion===undefined){
+      this.endQuiz()
+      }else{
+       this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+      }    
     })
 }
   
@@ -252,8 +263,7 @@ startTimer=()=>{
             seconds:0
           }
         },()=>{
-          alert('Quiz has ended!')
-          this.props.history.push('/')
+         this.endQuiz()
         })
       } else{
         this.setState({
@@ -286,6 +296,23 @@ handleDisableButton=()=>{
     })
   }
 }
+endQuiz=()=>{
+  alert('Quiz has ended')
+  const {state}=this
+  const playerStats={
+    score:state.score,
+    numberOfQuestions:state.numberOfQuestions,
+    numberOfAnsweredQuestions:state.numberOfAnsweredQuestions,
+    correctAnswer:state.correctAnswer,
+    wrongAnswered:state.wrongAnswered,
+    fiftyFiftyUsed: 2 - state.fiftyFifty,
+    hintsUsed: 5-state.hints
+  }
+  console.log(playerStats)
+  setTimeout(()=>{
+   this.props.history.push('/')
+  },1000)
+}
   render(){  
     const {
      currentQuestion,
@@ -298,9 +325,9 @@ handleDisableButton=()=>{
       <>
       <Helmet><title>Quiz</title></Helmet>
        <>
-       <audio id="correct-sound" controls src={correctNotification}></audio>
-       <audio id="wrong-sound" controls src={wrongNotification}></audio>
-       <audio id="button-sound" controls src={buttonSound}></audio>
+       <audio ref={this.correctSound} controls src={correctNotification}></audio>
+       <audio ref={this.wrongSound} controls src={wrongNotification}></audio>
+       <audio ref={this.buttonSound} controls src={buttonSound}></audio>
        </>
       <div className="questions" >
        <h2>Quiz Mode</h2>
@@ -335,13 +362,13 @@ handleDisableButton=()=>{
         </div>
         <div className="button-container">
          <button 
-         className={className('', {'disable':this.state.previousButtonDisabled})}
+         className={classnames('', {'disable': this.state.previousButtonDisabled})}
          id="previous-button"  
          onClick={this.handleButtonClick}>
           previous
          </button>
          <button 
-         className={classnames('', {'disable': this.state.nextButtonDisabled})}
+          className={classnames('', {'disable': this.state.nextButtonDisabled})}
          id="next-button" 
          onClick={this.handleButtonClick} >
          next 
