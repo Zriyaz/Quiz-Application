@@ -16,3 +16,9 @@ body{
   border-radius: 5px important;
   color:white important;
 }
+.disable{
+  background: #ccc !important;
+  box-shadow: none !important;
+  pointer-events: none;
+  opacity: 0.9  !important;
+}

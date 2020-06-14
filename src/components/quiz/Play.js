@@ -27,6 +27,8 @@ class Play extends React.Component{
       hints:5,
       fiftyFifty:2,
       usedFiftyFifty:false,
+      nextButtonDisabled:false,
+      previousButtonDisabled:true,
       priviousRandomNumbers:[],
       time:{}
     }
@@ -56,6 +58,7 @@ class Play extends React.Component{
         priviousRandomNumbers:[]
       },()=>{
         this.showOptions()
+        this.handleDisableButton()
       })
     }
   }
@@ -262,6 +265,27 @@ startTimer=()=>{
       }
   },1000) 
 }
+handleDisableButton=()=>{
+  if(this.state.previousQuestion===undefined ||this.state.currentQuestionIndex===0){
+    this.setState({
+      previousButtonDisabled:true
+    })
+  }else{
+    this.setState({
+      previousButtonDisabled:false
+    })
+  }
+
+  if(this.state.nextQuestion===undefined ||this.state.currentQuestionIndex+1===this.state.numberOfQuestions){
+    this.setState({
+      nextButtonDisabled:true
+    })
+  }else{
+    this.setState({
+      nextButtonDisabled:false
+    })
+  }
+}
   render(){  
     const {
      currentQuestion,
@@ -310,8 +334,18 @@ startTimer=()=>{
           <p onClick ={this.handleOptionClick} className="option">{currentQuestion.optionD}</p>
         </div>
         <div className="button-container">
-         <button id="previous-button"  onClick={this.handleButtonClick}>previous</button>
-         <button id="next-button" onClick={this.handleButtonClick} >next</button>
+         <button 
+         className={className('', {'disable':this.state.previousButtonDisabled})}
+         id="previous-button"  
+         onClick={this.handleButtonClick}>
+          previous
+         </button>
+         <button 
+         className={classnames('', {'disable': this.state.nextButtonDisabled})}
+         id="next-button" 
+         onClick={this.handleButtonClick} >
+         next 
+         </button>
          <button id="quit-button" onClick={this.handleButtonClick} >quit</button>
         </div>
       </div>
