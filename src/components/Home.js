@@ -17,8 +17,8 @@ const Home = () => (
                     </ul>
                 </div>
                 <div className="auth-container">
-                    <Link to="/login" className="auth-buttons" id="login-button">Login</Link>
-                    <Link to="/register" className="auth-buttons" id="signup-button">Sign up</Link>
+                    <Link to="/login/UserLogin" className="auth-buttons" id="login-button">Login</Link>
+                    <Link to="/register/UserSignUp" className="auth-buttons" id="signup-button">Sign up</Link>
                 </div>
             </section>
         </div>
