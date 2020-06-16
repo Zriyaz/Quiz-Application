@@ -10,7 +10,7 @@ const Home = () => (
                 <div style={{ textAlign: 'center' }}>
                     <span className="mdi mdi-cube-outline cube"></span>
                 </div>
-                <h1>Quiz App</h1>
+                <h1>Brain Testing</h1>
                 <div className="play-button-container">
                     <ul>
                         <li><Link className="play-button" to="/play/instructions">Play</Link></li>
