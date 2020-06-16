@@ -1,135 +1,135 @@
 [
     {
-        "question": "What temperature does water boil at?",
-        "optionA": "50 degrees Celcius",
-        "optionB": "25 degrees Celcius",
-        "optionC": "100 degrees Celcius",
-        "optionD": "150 degrees Celcius",
-        "answer": "100 degrees Celcius"
+        "question": "IC chips used in computers are usually made of?",
+        "optionA": "Lead",
+        "optionB": "Silicon",
+        "optionC": "Gold",
+        "optionD": "Chromium",
+        "answer": "Lead"
     },
 
     {
-        "question": "Who wrote Julius Caesar, Macbeth and Hamlet?",
-        "optionA": "Wole Soyinka",
-        "optionB": "William Shakespeare",
-        "optionC": "Ngozi Chimamanda Adichie",
-        "optionD": "Dan Brown",
-        "answer": "William Shakespeare"
+        "question": "Find out the odd one",
+        "optionA": "Internet",
+        "optionB": " Linux",
+        "optionC": " Unix",
+        "optionD": "Windows",
+        "answer": "Internet"
     },
 
     {
-        "question": "What did the crocodile swallow in Peter Pan?",
-        "optionA": "A Book",
-        "optionB": "A Computer",
-        "optionC": "A pair of shoes",
-        "optionD": "Alarm Clock",
-        "answer": "Alarm Clock"
+        "question": "From the following sorting algorithms which algorithm needs the minimum number of swaps?",
+        "optionA": "Bubble sort",
+        "optionB": "Quick sort",
+        "optionC": "Merge sort",
+        "optionD": "Selection sort",
+        "answer": "Selection sort"
     },
 
     {
-        "question": "Which is the only mammal that can’t jump?",
-        "optionA": "Dog",
-        "optionB": "Elephant",
-        "optionC": "Goat",
-        "optionD": "Lion",
-        "answer": "Elephant"
+        "question": "What kind of errors can be pointed out by the compiler?",
+        "optionA": "Syntax error",
+        "optionB": "Symantic error",
+        "optionC": "Logical error",
+        "optionD": "Internal error",
+        "answer": "Syntax error"
     },
 
     {
-        "question": "Who lived at 221B, Baker Street, London?",
-        "optionA": "Tony Stark",
-        "optionB": "Morgan Freeman",
-        "optionC": "Sherlock Holmes",
-        "optionD": "Samuel L. Jackson",
-        "answer": "Sherlock Holmes"
+        "question": "FAQ stands for?",
+        "optionA": "Frequently Asked Questions",
+        "optionB": "Favourite Asked Questions",
+        "optionC": "Favourite and Answered Questions",
+        "optionD": "Frequently Answered Questions",
+        "answer": "Frequently Asked Questions"
     },
     {
-        "question": "What colour is a panda?",
-        "optionA": "Green and Yellow",
-        "optionB": "Blue and Red",
-        "optionC": "Green and White",
-        "optionD": "Black and White",
-        "answer": "Black and White"
-    },
-
-    {
-        "question": "Where is the smallest bone in the human body?",
-        "optionA": "The Chest",
-        "optionB": "The Ear",
-        "optionC": "The Legs",
-        "optionD": "The Hands",
-        "answer": "The Ear"
+        "question": "Which one of the following can not be scheduled by the kernel?",
+        "optionA": "kernel level thread",
+        "optionB": "user level thread",
+        "optionC": "process",
+        "optionD": "none of the mentioned",
+        "answer": " user level thread"
     },
 
     {
-        "question": "What does the roman numeral C represent?",
-        "optionA": "100",
-        "optionB": "10",
-        "optionC": "10,000",
-        "optionD": "1,000,000",
-        "answer": "100"
+        "question": "Which algorithm is defined in Time quantum?",
+        "optionA": "shortest job scheduling algorithm",
+        "optionB": "round robin scheduling algorithm",
+        "optionC": "priority scheduling algorithm",
+        "optionD": "multilevel queue scheduling algorithm",
+        "answer": "round robin scheduling algorithm"
     },
 
     {
-        "question": "What takes place in Hong Kong's Happy Valley?",
-        "optionA": "Chicken Wrestling",
-        "optionB": "Horse racing",
+        "question": "Which of the following closely resembles Create view?",
+        "optionA": "Create table . . .like",
+        "optionB": "Create table . . . as",
+        "optionC": "With data",
+        "optionD": "Create view as",
+        "answer": "Create table . . . as"
+    },
+
+    {
+        "question": " Aggregate functions are functions that take a ___________ as input and return a single value.?",
+        "optionA": "Collection of values",
+        "optionB": "Single value",
         "optionC": "Street Racing",
-        "optionD": "Arm Wrestling",
-        "answer": "Horse racing"
+        "optionD": "Both Collection of values & Single value",
+        "answer": "Collection of values"
     },
 
     {
-        "question": "Who painted the Mona Lisa?",
-        "optionA": "Alexander Graham Bell",
-        "optionB": "Sir Isaac Newton",
-        "optionC": "Leonardo Da Vinci",
-        "optionD": "Albert Einstein",
-        "answer": "Leonardo Da Vinci"
+        "question": "Which model in system modelling depicts the dynamic behaviour of the system ?",
+        "optionA": "Context Model",
+        "optionB": "Behavioral Model",
+        "optionC": "Data Model",
+        "optionD": "Object Model",
+        "answer": "Behavioral Model"
     },
 
     {
-        "question": "What’s the most important book in the Moslem religion?",
-        "optionA": "The Koran",
-        "optionB": "The Dictionary",
-        "optionC": "The Bible",
-        "optionD": "The Chemistry text Book",
-        "answer": "The Koran"
+        "question": "The UML supports event-based modeling using ____________ diagrams.?",
+        "optionA": "Deployment",
+        "optionB": "Collaboration",
+        "optionC": "State chart",
+        "optionD": "All of the mentioned",
+        "answer": " State chart"
     },
 
     {
-        "question": "What’s the capital of Ethiopia?",
-        "optionA": "Cape Town",
-        "optionB": "San Francisco",
-        "optionC": "Abuja",
-        "optionD": "Syndey",
-        "answer": "Addis Ababa"
+        "question": "In a Javascript Application what function can be used to send messages to users requesting for an text input?",
+        "optionA": "Display()",
+        "optionB": "Alert()",
+        "optionC": " GetOutput()",
+        "optionD": "Prompt()",
+        "answer": "Prompt()"
     },
 
     {
-        "question": "How many squares are there on a chess board?",
-        "optionA": "128",
-        "optionB": "64",
-        "optionC": "32",
-        "optionD": "256",
-        "answer": "64"
+        "question": "What does error 404 or Not Found error while accessing a URL mean?",
+        "optionA": "The server could not find the requested URL",
+        "optionB": "Requested HTML file is not available",
+        "optionC": "The path to the interpreter of the script is not valid",
+        "optionD": "The requested HTML file does not have sufficient permissions",
+        "answer": "The server could not find the requested URL"
     },
 
     {
-        "question": "Who invented the electric light bulb?",
-        "optionA": "Tom Cruise",
-        "optionB": "Barack Obama",
-        "optionC": "Wole Soyinka",
+        "question": "Which of these is a client server application?",
+        "optionA": "Web browsing",
+        "optionB": "E-mail",
+        "optionC": "Internet Chat",
         "optionD": "Thomas Edison",
-        "answer": "Thomas Edison"
+        "answer": "All of the above"
     },
 
     {
-        "question": "What are the first three words of the bible?",
-        "optionA": "be with everyone",
-        "optionB": "Again Jesus asked",
-        "optionC": "In the beginning",
-        "optionD": "At that time",
-        "answer": "In the beginning"
+        "question": "How do I add scrolling text to my page?",
+        "optionA": " <scroll>",
+        "optionB": "<marquee>",
+        "optionC": "<ciruler>",
+        "optionD": "<tab>",
+        "answer": "<marquee>"
     }
 ]
